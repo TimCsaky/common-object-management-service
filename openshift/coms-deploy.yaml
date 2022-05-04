@@ -1,0 +1,71 @@
+---
+apiVersion: v1
+kind: DeploymentConfig
+metadata:
+  name: coms-master
+spec:
+  replicas: 2
+  selector:
+    app: coms-master
+    deploymentconfig: coms-app-master
+    role: app
+  strategy:
+    type: Rolling
+    resources: {}
+    rollingParams:
+      timeoutSeconds: 600
+  template:
+    metadata:
+      labels:
+        app: coms-master
+        deploymentconfig: coms-app-master
+        role: app
+    spec:
+      containers:
+        - name: app
+          image: docker.io/bcgovimages/common-object-management-service:latest
+          imagePullPolicy: IfNotPresent
+          resources:
+            limits:
+              cpu: 50m
+              memory: 128Mi
+            requests:
+              cpu: 10m
+              memory: 64Mi
+          env:
+            - name: DB_HOST
+              valueFrom:
+                secretKeyRef:
+                  name: crunchy-pguser-crunchy
+                  key: host
+            - name: DB_PORT
+              valueFrom:
+                secretKeyRef:
+                  name: crunchy-pguser-crunchy
+                  key: port
+            - name: DB_DATABASE
+              valueFrom:
+                secretKeyRef:
+                  name: crunchy-pguser-crunchy
+                  key: dbname
+            - name: DB_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: crunchy-pguser-crunchy
+                  key: user
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: crunchy-pguser-crunchy
+                  key: password
+            - name: PROXY_ADDRESS_FORWARDING
+              value: "true"
+          envFrom:
+            - configMapRef:
+                name: coms-config
+          ports:
+            - containerPort: 3000
+              protocol: TCP
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 30
+  test: false

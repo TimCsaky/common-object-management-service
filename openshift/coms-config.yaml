@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: coms-config
+  namespace: 1dca6b-dev
+data:
+  SERVER_BASEPATH: coms-dev.apps.silver.devops.gov.bc.ca
+  OBJECTSTORAGE_ACCESSKEYID: nr-iit-showcase
+  OBJECTSTORAGE_BUCKET: ***
+  OBJECTSTORAGE_ENDPOINT: https://nrs.objectstore.gov.bc.ca
+  OBJECTSTORAGE_KEY: coms/dev
+  OBJECTSTORAGE_SECRETACCESSKEY: ***
+  KC_ENABLED: "true"
+  KC_SERVERURL: https://dev.oidc.gov.bc.ca/auth
+  KC_REALM: ***
+  KC_PUBLICKEY: ***
+  KC_CLIENTID: coms
+  KC_CLIENTSECRET: ***
+  DB_ENABLED: "true"

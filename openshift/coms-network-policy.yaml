@@ -1,0 +1,21 @@
+---
+kind: NetworkPolicy
+apiVersion: networking.k8s.io/v1
+metadata:
+  name: allow-coms-to-crunchydb-cluster
+  namespace: 1dca6b-dev
+  labels:
+    app: coms-master
+spec:
+  podSelector:
+    matchLabels:
+      postgres-operator.crunchydata.com/cluster: crunchy
+      postgres-operator.crunchydata.com/role: master
+  ingress:
+    - from:
+        - podSelector:
+            matchLabels:
+              app: coms-master
+      ports:
+        - protocol: TCP
+          port: 5432
