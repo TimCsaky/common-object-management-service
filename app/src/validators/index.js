@@ -7,4 +7,5 @@ module.exports = {
   tagValidator: require('./tag'),
   userValidator: require('./user'),
   versionValidator: require('./version'),
+  xPermissionValidator: require('./xPermission'),
 };

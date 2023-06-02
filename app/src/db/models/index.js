@@ -12,6 +12,7 @@ const models = {
   Version: require('./tables/version'),
   VersionMetadata: require('./tables/versionMetadata'),
   VersionTag: require('./tables/versionTag'),
+  XPermission: require('./tables/xpermission'),
 
   // Views
 };

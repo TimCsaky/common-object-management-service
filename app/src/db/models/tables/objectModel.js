@@ -153,6 +153,8 @@ class ObjectModel extends Timestamps(Model) {
             });
         }
       },
+
+      // see notes in xPermissionService.searchPErmissions.
       hasPermission(query, userId, permCode) {
         if (userId && permCode) {
           query

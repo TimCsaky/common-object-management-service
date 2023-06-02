@@ -29,7 +29,7 @@ const {
 const utils = require('../db/models/utils');
 
 const {
-  bucketPermissionService,
+  xPermissionService,
   metadataService,
   objectService,
   storageService,
@@ -237,11 +237,13 @@ const controller = {
       let fileEventCount = 0;
 
       const bucketId = req.query.bucketId ? addDashesToUuid(req.query.bucketId) : undefined;
+      const reqPath = req.query.path; // relative to bucket key
       const userId = await userService.getCurrentUserId(getCurrentIdentity(req.currentUser, SYSTEM_USER));
 
-      // Preflight CREATE permission check if bucket scoped and OIDC authenticated
+      // Preflight CREATE permission check if buckt/path scoped and OIDC authenticated
       if (bucketId && userId) {
-        const permission = await bucketPermissionService.searchPermissions({ userId: userId, bucketId: bucketId, permCode: 'CREATE' });
+        const permission = await xPermissionService.searchPermissions({ userId: userId, path: reqPath, permCode: 'CREATE' });
+
         if (!permission.length) {
           return new Problem(403, { detail: 'User lacks permission to complete this action' }).send(res);
         }
@@ -253,7 +255,7 @@ const controller = {
       bb.on('file', (name, stream, info) => {
         fileEventCount++;
         const objId = uuidv4();
-        const path = joinPath(bucketKey, info.filename);
+        const path = joinPath(bucketKey, reqPath, info.filename);
 
         const data = {
           id: objId,
@@ -265,7 +267,8 @@ const controller = {
           tags: {
             ...req.query.tagset,
             'coms-id': objId // Enforce `coms-id:<objectId>` tag
-          }
+          },
+          path: reqPath
         };
 
         // Preflight S3 Object check

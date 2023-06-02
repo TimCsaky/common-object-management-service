@@ -33,4 +33,5 @@ module.exports = {
   tagService: featureNoDb(require('./tag')),
   userService: featureNoDb(require('./user')),
   versionService: featureNoDb(require('./version')),
+  xPermissionService: featureNoDb(require('./xPermission')),
 };

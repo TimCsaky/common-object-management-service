@@ -40,6 +40,10 @@ const _checkPermission = async ({ currentObject, currentUser, params }, permissi
 
     // Check if user has the required permission in their permission set
     result = permissions.some(p => p.permCode === permission);
+
+    // // check x_permission table here
+    // result = await xermissionService.searchPermissions({ params.objectId, ...searchParams});
+
   }
 
   log.debug('Missing user identification', { function: '_checkPermission' });
@@ -96,7 +100,26 @@ const currentObject = async (req, _res, next) => {
   } catch (err) {
     log.warn(err.message, { function: 'currentObject' });
   }
+  next();
+};
 
+
+/**
+ * @function currentPath
+ * Injects a currentPath to the request if there is an applicable object record
+ * @param {object} req Express request object
+ * @param {object} _res Express response object
+ * @param {function} next The next callback function
+ * @returns {function} Express middleware function
+ */
+const currentPath = async (req, _res, next) => {
+  try {
+    if (req.params.objectId) {
+      req.currentPath = await objectService.readPath(req.params.objectId);
+    }
+  } catch (err) {
+    log.warn(err.message, { function: 'currentPath' });
+  }
   next();
 };
 
@@ -144,5 +167,5 @@ const hasPermission = (permission) => {
 };
 
 module.exports = {
-  _checkPermission, checkAppMode, currentObject, hasPermission
+  _checkPermission, checkAppMode, currentObject, currentPath, hasPermission
 };

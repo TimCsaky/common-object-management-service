@@ -46,6 +46,7 @@ const schema = {
     query: Joi.object((() => {
       const query = { tagset: type.tagset() };
       if (config.has('db.enabled')) query.bucketId = type.uuidv4;
+      if (config.has('db.enabled')) query.path = Joi.string();
       return query;
     })())
   },
