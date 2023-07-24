@@ -4,6 +4,9 @@ const config = require('config');
 const cors = require('cors');
 const { v4: uuidv4, NIL: SYSTEM_USER } = require('uuid');
 
+const { createHash } = require('node:crypto');
+const fs = require('fs');
+
 const {
   DEFAULTCORS,
   DownloadMode,
@@ -214,6 +217,14 @@ const controller = {
     }
   },
 
+
+  getHash(content) {
+    const hash = createHash('sha256');
+    const data = hash.update(content, 'utf-8');
+    const gen_hash = data.digest('hex');
+    return gen_hash;
+  },
+
   /**
    * @function createObject
    * Creates a new object
@@ -274,7 +285,58 @@ const controller = {
             // TODO: Consider adding in PutObject analog for sub 5GB file operations
             const contentLength = parseInt(req.get('Content-Length'));
             if (contentLength < MAXFILEOBJECTLENGTH) {
-              s3Promise = storageService.upload({ ...data, stream: stream });
+              // s3Promise = storageService.upload({ ...data, stream: stream });
+
+
+              var chunkNum = 1;
+              // get all hashes for this file in one query
+              const storage = [{ id: '123', key: '/coms/dev/a1.txt', chunkNum: 1, hash: 'f19f8978e56118bc3a97a921f63933d798388d26691db5722f818c678e871eb4' }];
+
+              stream.on('data', (chunk) => {
+
+                chunkNum++;
+                // // get hash of chuck
+                const hash = this.getHash(chunk);
+
+                // ---- if chunk hash has changed from in db
+                const dbRecord = storage.filter(row => row.chunkNum == chunkNum);
+                // if chunk in db
+                if(dbRecord.length){
+                  // chunk hash has changed
+                  if( dbRecord.hash !== hash){
+                    // write file to a cache (named with uuid)
+                    const chunkCache = fs.createWriteStream('./'+ dbRecord.id);
+                    chunkCache.write(chunk);
+                    // upload chunk
+                    s3Promise = storageService.upload({ ...data, stream: chunk });
+                    // update db record
+                    // insert new hash into db
+                    // storage.push({ id: '123', key: joinPath(bucketKey, info.filename), hash: hash });
+                  }
+                }
+
+                //   // insert (or get existing) db record
+                //   const record = storage[0]; // uuid
+                //   // write file to cache (named with uuid)
+                //   const chunkCache = fs.createWriteStream('./'+ record.id);
+                //   chunkCache.write(chunk);
+
+                //   s3Promise = storageService.upload({ ...data, stream: chunk });
+                //   // insert new hash into db
+                //   storage.push({ id: '123', key: joinPath(bucketKey, info.filename), hash: hash });
+
+                // chunkNum++;
+                // }
+
+              });
+
+              // after all chunks
+              // if(chunkCount)
+              // else skip
+              // console.log('hmm', chunkCount);
+
+
+
             } else {
               req.unpipe(bb);
               throw new Problem(413, { detail: 'File exceeds maximum 50GB limit' });
@@ -662,11 +724,13 @@ const controller = {
    */
   async listObjectVersion(req, res, next) {
     try {
-      const objId = addDashesToUuid(req.params.objectId);
+      console.log('a');
 
-      const response = await versionService.list(objId);
+      // const objId = addDashesToUuid(req.params.objectId);
+
+      // const response = await versionService.list(objId);
       // TODO: sync with current versions in S3
-      // const s3Versions = await storageService.listObjectVersion(data);
+      const response = await storageService.listObjectVersion();
 
       res.status(200).json(response);
     } catch (e) {
