@@ -54,6 +54,7 @@ postgres:
   # ----- pgBouncer (network pooling) ------
   pgBouncerConfig:
     replicas: 3
+<<<<<<< HEAD
 
   # -------- backups ---------
   pgBackRestConfig:
@@ -118,3 +119,5 @@ postgres:
           limits:
             cpu: 50m
             memory: 128Mi
+=======
+>>>>>>> 479b99b (Upgrade to CrunchyDB)
