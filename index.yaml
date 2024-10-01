@@ -3,6 +3,41 @@ entries:
   common-object-management-service:
   - apiVersion: v2
     appVersion: 0.8.0
+    created: "2024-10-01T21:46:05.612640112Z"
+    dependencies:
+    - condition: patroni.enabled
+      name: crunchy-postgres
+      repository: https://timcsaky.github.io/nr-patroni-chart
+      tags:
+      - crunchy-postgres
+      version: ~0.0.3
+    description: A microservice for managing access control to S3 Objects
+    digest: f4b2d5589977518b2160c6572fd0450c5c2410500443a91bce5db1a568f6528f
+    home: https://bcgov.github.io/common-object-management-service
+    keywords:
+    - nodejs
+    - javascript
+    - docker
+    - microservice
+    - s3
+    - document-management
+    - access-control
+    - object-storage
+    - domo
+    kubeVersion: '>= 1.13.0'
+    maintainers:
+    - email: NR.CommonServiceShowcase@gov.bc.ca
+      name: NR Common Service Showcase Team
+      url: https://bcgov.github.io/common-service-showcase/team.html
+    name: common-object-management-service
+    sources:
+    - https://github.com/bcgov/common-object-management-service
+    type: application
+    urls:
+    - https://github.com/TimCsaky/common-object-management-service/releases/download/common-object-management-service-0.1.1/common-object-management-service-0.1.1.tgz
+    version: 0.1.1
+  - apiVersion: v2
+    appVersion: 0.8.0
     created: "2024-10-01T20:54:59.055366585Z"
     dependencies:
     - condition: patroni.enabled
@@ -71,4 +106,4 @@ entries:
     urls:
     - https://github.com/timcsaky/common-object-management-service/releases/download/common-object-management-service-0.0.22/common-object-management-service-0.0.22.tgz
     version: 0.0.22
-generated: "2024-10-01T20:54:59.055378988Z"
+generated: "2024-10-01T21:46:05.612657886Z"
