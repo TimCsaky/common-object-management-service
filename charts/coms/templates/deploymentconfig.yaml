@@ -8,7 +8,7 @@
 {{- define "coms.connectsTo" -}}
 apiVersion: apps/v1
 kind: StatefulSet
-name: {{ include "crunchy-postgres.fullname" .Subcharts.patroni }}
+name: {{ include "patroni.fullname" .Subcharts.patroni }}
 {{- end }}
 ---
 apiVersion: apps.openshift.io/v1
