@@ -192,6 +192,12 @@ objectStorageSecretOverride:
 patroni:
   # -- Controls whether to enable managing a Patroni db dependency as a part of the helm release
   enabled: true
+  # fullnameOverride: patroni
+  users:
+    - name: app
+      databases:
+        - app
+      options: "CREATEROLE"
 
   # replicaCount: 3
   # resources: {}
