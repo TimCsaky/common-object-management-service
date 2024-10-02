@@ -47,7 +47,8 @@ Common labels
 {{- define "coms.labels" -}}
 helm.sh/chart: {{ include "coms.chart" . }}
 app: {{ include "coms.fullname" . }}
-{{ include "coms.selectorLabels" . }}
+app.kubernetes.io/name: {{ include "coms.name" . }}
+app.kubernetes.io/instance: {{ .Release.Name }}
 {{- if .Chart.AppVersion }}
 app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
 {{- end }}
@@ -61,8 +62,8 @@ app.openshift.io/runtime: nodejs
 Selector labels
 */}}
 {{- define "coms.selectorLabels" -}}
-app.kubernetes.io/name: {{ include "coms.name" . }}
-app.kubernetes.io/instance: {{ .Release.Name }}
+matchLabels.app.kubernetes.io/name: {{ include "coms.name" . }}
+matchLabels.app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
 
 {{/*
