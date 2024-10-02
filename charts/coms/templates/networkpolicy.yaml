@@ -15,6 +15,5 @@ spec:
       ports:
         - port: {{ default "8080" .Values.config.configMap.SERVER_PORT | atoi }}
           protocol: TCP
-  podSelector:
-    matchLabels: {{- include "coms.selectorLabels" . | nindent 6 }}
+  podSelector: {}
 {{- end }}
