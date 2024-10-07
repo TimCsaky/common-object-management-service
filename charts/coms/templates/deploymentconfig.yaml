@@ -1,5 +1,6 @@
-{{ $dbHostName := "postgres-pgbouncer" }}
-{{ $dbSecretName := printf "%s-%s-%s" "postgres" "pguser" (first .Values.postgres.users).name }}
+{{- $dbHostName := "postgres-pgbouncer" -}}
+{{- $postgresClusterName = include "postgres.fullname" .Subcharts.postgres -}}
+{{- $dbSecretName := printf "%s-%s-%s" $postgresClusterName "pguser" (first .Values.postgres.users).name -}}
 {{- define "coms.connectsTo" -}}
 apiVersion: apps/v1
 kind: StatefulSet
