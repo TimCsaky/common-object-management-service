@@ -111,18 +111,28 @@ spec:
   
   backups:
     pgbackrest:
+      manual:
+        repoName: repo1
+        options:
+         - --type=full
       {{ if .Values.pgBackRest.image }}
       image: {{ .Values.pgBackRest.image }}
       {{ end }}
       {{- if .Values.pgBackRest.s3.enabled }}
+      {{- /*
+      enable one-off backups.
+      see: 
+      */}}
       configuration:
       - secret:
           name: {{ .Values.pgBackRest.s3.s3Secret }}
       {{- end }}
       global:
         # Support both PVC and s3 backups
+        {{- if .Values.pgBackRest.repos.volume.enabled }}
         repo1-retention-full: {{ .Values.pgBackRest.retention | quote }}
         repo1-retention-full-type: {{ .Values.pgBackRest.retentionFullType }}
+        {{- end }}
         {{- if .Values.pgBackRest.s3.enabled }}
         repo2-retention-full: {{ .Values.pgBackRest.retention | quote }}
         repo2-retention-full-type: {{ .Values.pgBackRest.retentionFullType }}
@@ -131,6 +141,7 @@ spec:
         {{- end }}
       repos:
         # hardcoding repo1 until we solution allowing multiple repos
+        {{- if .Values.pgBackRest.repos.volume.enabled }}
         - name: repo1
           schedules:
             full: {{ .Values.pgBackRest.repos.schedules.full }}
@@ -143,6 +154,7 @@ spec:
                 requests:
                   storage: {{ .Values.pgBackRest.repos.volume.storage }}
               storageClassName: {{ .Values.pgBackRest.repos.volume.storageClassName }}
+        {{- end }}
         {{- if .Values.pgBackRest.s3.enabled }}
         - name: repo2
           schedules:
@@ -180,6 +192,9 @@ spec:
             limits:
               cpu: {{ .Values.pgBackRest.sidecars.limits.cpu }}
               memory: {{ .Values.pgBackRest.sidecars.limits.memory }}
+  
+  
+  
   standby:
     enabled: {{ .Values.standby.enabled }}
     repoName: {{ .Values.standby.repoName }}
