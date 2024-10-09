@@ -191,9 +191,20 @@ objectStorageSecretOverride:
 # crunchy-postgres subchart configuration overrides
 postgres:
   enabled: true
-  # crunchy config:
+
+  # --------------------------------
+  # --------crunchydb config: ------
+  # --------------------------------
+
+  # note: override methodology:
+  # - defaults exist in subchart crunchy-postgres
+  # - overrides that apply to all coms environments are defined in this values.yaml file
+  # - overrides specific to a single environment are defined in values.<environment>.yaml
+
   fullnameOverride: ~
   nameOverride: postgres
+
+  # ------- postgres user/db configuration ----------
   users:
     - name: app
       databases:
@@ -204,3 +215,11 @@ postgres:
     name: bootstrap-sql
     key: bootstrap.sql
     sql: ALTER DATABASE app OWNER TO app;
+
+  # -------- backups ---------
+  pgBackRest:
+    repos:
+      volume:
+        enabled: false
+    s3:
+      enabled: false
