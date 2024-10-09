@@ -3,6 +3,40 @@ entries:
   common-object-management-service:
   - apiVersion: v2
     appVersion: 0.8.0
+    created: "2024-10-09T20:34:14.50875865Z"
+    dependencies:
+    - alias: postgres
+      condition: postgres.enabled
+      name: crunchy-postgres
+      repository: file://../crunchy-postgres
+      version: 0.0.58
+    description: A microservice for managing access control to S3 Objects
+    digest: 6ef9aa732ca50c9bf26a1d3a35b6b9ee7f9b75c903fd03a01bcd8d3658d6b296
+    home: https://bcgov.github.io/common-object-management-service
+    keywords:
+    - nodejs
+    - javascript
+    - docker
+    - microservice
+    - s3
+    - document-management
+    - access-control
+    - object-storage
+    - domo
+    kubeVersion: '>= 1.13.0'
+    maintainers:
+    - email: NR.CommonServiceShowcase@gov.bc.ca
+      name: NR Common Service Showcase Team
+      url: https://bcgov.github.io/common-service-showcase/team.html
+    name: common-object-management-service
+    sources:
+    - https://github.com/bcgov/common-object-management-service
+    type: application
+    urls:
+    - https://github.com/TimCsaky/common-object-management-service/releases/download/common-object-management-service-0.5.8/common-object-management-service-0.5.8.tgz
+    version: 0.5.8
+  - apiVersion: v2
+    appVersion: 0.8.0
     created: "2024-10-09T20:11:02.781258088Z"
     dependencies:
     - alias: postgres
@@ -1682,6 +1716,16 @@ entries:
   crunchy-postgres:
   - apiVersion: v2
     appVersion: 5.0.4
+    created: "2024-10-09T20:34:14.643105782Z"
+    description: A Helm chart for Kubernetes
+    digest: 8bac7fefdd46bd93d543f0c283d256415e476cf1491fbf8cfa920282983d9468
+    name: crunchy-postgres
+    type: application
+    urls:
+    - https://github.com/TimCsaky/common-object-management-service/releases/download/crunchy-postgres-0.0.58/crunchy-postgres-0.0.58.tgz
+    version: 0.0.58
+  - apiVersion: v2
+    appVersion: 5.0.4
     created: "2024-10-09T20:11:02.889346671Z"
     description: A Helm chart for Kubernetes
     digest: 01cc3746bedc47e47b3f9c565754fb7fd56ecae7118654646b2c60cc87a85cec
@@ -1890,4 +1934,4 @@ entries:
     urls:
     - https://github.com/TimCsaky/common-object-management-service/releases/download/crunchy-postgres-0.0.1/crunchy-postgres-0.0.1.tgz
     version: 0.0.1
-generated: "2024-10-09T20:11:02.89035063Z"
+generated: "2024-10-09T20:34:14.643574879Z"
