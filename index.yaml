@@ -3,6 +3,40 @@ entries:
   common-object-management-service:
   - apiVersion: v2
     appVersion: 0.8.0
+    created: "2024-10-17T22:21:07.152827897Z"
+    dependencies:
+    - alias: postgres
+      condition: postgres.enabled
+      name: postgrescluster
+      repository: file://../postgres
+      version: 5.8.1
+    description: A microservice for managing access control to S3 Objects
+    digest: e3e5103c1d2aca591ab4016977a30ba14849200399439a83a391917056fa1db7
+    home: https://bcgov.github.io/common-object-management-service
+    keywords:
+    - nodejs
+    - javascript
+    - docker
+    - microservice
+    - s3
+    - document-management
+    - access-control
+    - object-storage
+    - domo
+    kubeVersion: '>= 1.13.0'
+    maintainers:
+    - email: NR.CommonServiceShowcase@gov.bc.ca
+      name: NR Common Service Showcase Team
+      url: https://bcgov.github.io/common-service-showcase/team.html
+    name: common-object-management-service
+    sources:
+    - https://github.com/bcgov/common-object-management-service
+    type: application
+    urls:
+    - https://github.com/TimCsaky/common-object-management-service/releases/download/common-object-management-service-0.8.1/common-object-management-service-0.8.1.tgz
+    version: 0.8.1
+  - apiVersion: v2
+    appVersion: 0.8.0
     created: "2024-10-17T21:48:24.479666879Z"
     dependencies:
     - alias: postgres
@@ -2629,6 +2663,16 @@ entries:
   postgrescluster:
   - apiVersion: v2
     appVersion: 5.6.0
+    created: "2024-10-17T22:21:07.441862271Z"
+    description: A Helm chart for Kubernetes
+    digest: 65d9ed96548ace8e30d83ae700020854d3a6e0d89ed440740e641779bd64151f
+    name: postgrescluster
+    type: application
+    urls:
+    - https://github.com/TimCsaky/common-object-management-service/releases/download/postgrescluster-5.8.1/postgrescluster-5.8.1.tgz
+    version: 5.8.1
+  - apiVersion: v2
+    appVersion: 5.6.0
     created: "2024-10-17T21:48:24.568524614Z"
     description: A Helm chart for Kubernetes
     digest: 7e86fb8be00a09650d6ebfc3f28a1c032e2cf5a314107e803647b741876a02cc
@@ -2727,4 +2771,4 @@ entries:
     urls:
     - https://github.com/TimCsaky/common-object-management-service/releases/download/postgrescluster-5.6.0/postgrescluster-5.6.0.tgz
     version: 5.6.0
-generated: "2024-10-17T21:48:24.56884272Z"
+generated: "2024-10-17T22:21:07.442246412Z"
