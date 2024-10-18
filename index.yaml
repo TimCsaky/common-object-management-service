@@ -3,6 +3,40 @@ entries:
   common-object-management-service:
   - apiVersion: v2
     appVersion: 0.8.0
+    created: "2024-10-18T17:45:17.790966309Z"
+    dependencies:
+    - alias: postgres
+      condition: postgres.enabled
+      name: postgrescluster
+      repository: file://../postgres
+      version: 1.0.0
+    description: A microservice for managing access control to S3 Objects
+    digest: c36413ec69eabd1236e536edd536b4fc51d889647e30b7696d11ef555bb0eb7a
+    home: https://bcgov.github.io/common-object-management-service
+    keywords:
+    - nodejs
+    - javascript
+    - docker
+    - microservice
+    - s3
+    - document-management
+    - access-control
+    - object-storage
+    - domo
+    kubeVersion: '>= 1.13.0'
+    maintainers:
+    - email: NR.CommonServiceShowcase@gov.bc.ca
+      name: NR Common Service Showcase Team
+      url: https://bcgov.github.io/common-service-showcase/team.html
+    name: common-object-management-service
+    sources:
+    - https://github.com/bcgov/common-object-management-service
+    type: application
+    urls:
+    - https://github.com/TimCsaky/common-object-management-service/releases/download/common-object-management-service-1.0.0/common-object-management-service-1.0.0.tgz
+    version: 1.0.0
+  - apiVersion: v2
+    appVersion: 0.8.0
     created: "2024-10-18T00:26:20.592506Z"
     dependencies:
     - alias: postgres
@@ -2815,4 +2849,14 @@ entries:
     urls:
     - https://github.com/TimCsaky/common-object-management-service/releases/download/postgrescluster-5.6.0/postgrescluster-5.6.0.tgz
     version: 5.6.0
-generated: "2024-10-18T00:26:20.721606653Z"
+  - apiVersion: v2
+    appVersion: 5.6.0
+    created: "2024-10-18T17:45:17.952802359Z"
+    description: A Helm chart for Kubernetes
+    digest: 2b1b55751a4be885d5a78a042398b3f58b6bb550b99b5adc1dd7b64f042b8a83
+    name: postgrescluster
+    type: application
+    urls:
+    - https://github.com/TimCsaky/common-object-management-service/releases/download/postgrescluster-1.0.0/postgrescluster-1.0.0.tgz
+    version: 1.0.0
+generated: "2024-10-18T17:45:17.953458758Z"
